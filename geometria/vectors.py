@@ -199,7 +199,6 @@ class Vector2D(object):
         return v
 
 
-
 class Vector3D(object):
     def __init__(self, x=0, y=0, z=0):
 
@@ -248,7 +247,7 @@ class Vector3D(object):
         return self.scale(scalar, scalar, scalar)
 
     def dot(self, vector):
-        return self.x * vector.x + self.y * vector.y + self.z * vector.z 
+        return self.x * vector.x + self.y * vector.y + self.z * vector.z
 
     def cross(self, vector):
         v = Vector3D()
@@ -259,7 +258,7 @@ class Vector3D(object):
 
         return v
 
-    def translate(self, dx=0, dy=0, dz = 0):
+    def translate(self, dx=0, dy=0, dz=0):
         v = Vector2D()
 
         v.x = self.x + dx
@@ -307,23 +306,30 @@ class Vector3D(object):
     def reflectZ(self):
         return self.scaleZ(-1)
 
-def v2(x=0,y=0):
-    return Vector2D(x,y)
 
-def v3(x=0,y=0,z=0):
+def v2(x=0, y=0):
+    return Vector2D(x, y)
+
+
+def v3(x=0, y=0, z=0):
     return Vector3D(x, y, z)
+
 
 zz = v2()
 zzz = v3()
 
+
 def separation(point1, point2):
-    return point2.subtract(point1).m 
+    return point2.subtract(point1).m
+
 
 def midpoint(point1, point2):
     return point1.add(point2.subtract(point1).times(0.5))
 
+
 def normal(point1, point2):
-    return point2.subtract(point1).n 
+    return point2.subtract(point1).n
+
 
 def scalarProduct(vector1, vector2):
     if isinstance(vector1, Vector2D) and isinstance(vector2, Vector2D):
@@ -331,18 +337,28 @@ def scalarProduct(vector1, vector2):
     elif isinstance(vector1, Vector3D) and isinstance(vector2, Vector3D):
         return vector1.dot(vector2)
 
+
 def vectorProduct(vector1, vector2):
     if isinstance(vector1, Vector2D) and isinstance(vector2, Vector2D):
         return vector1.x * vector2.y - vector1.y * vector2.x
     elif isinstance(vector1, Vector3D) and isinstance(vector2, Vector3D):
         return vector1.cross(vector2)
 
+
 def angleBetween(vector1, vector2):
     return acos(vector1.dot(vector2) / (vector1.m * vector2.m))
+
 
 def transformToUNCoordinates(v, u, n):
     alpha = (v.x * n.y - v.y * n.x) / (u.x * n.y - u.y * n.x)
     beta = (v.y - alpha * u.y) / n.y if n.x == 0 else (v.x - alpha * u.x) / n.x
 
     return v2(alpha, beta)
-    
+
+
+def getSeparationInTermsOfUAndN(point1, point2, u, n):
+    e1 = transformToUNCoordinates(point1, u, n)
+    e2 = transformToUNCoordinates(point2, u, n)
+    e3 = e2.subtract(e1)
+
+    return e3
