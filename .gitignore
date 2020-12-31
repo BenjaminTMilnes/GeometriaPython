@@ -1,1 +1,3 @@
 geometria.egg-info/*
+local_install.txt
+geometria/__pycache__/*
