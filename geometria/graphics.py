@@ -22,6 +22,12 @@ class GraphicsContext(object):
 
         self.drawPath([e1, e2, e3, e4], fillColour, "none", 0)
 
+    def drawCircularArc(centre, radius, fromAngle, toAngle, fillColour = "none", lineColour="black", lineWidth=1, lineDashStyle = []):
+        e1 = centre.add(v2(-radius, -radius))
+        e2 = centre.add(v2(radius, radius))
+
+        self.draw.arc([(e1.x, e1.y), (e2.x, e2.y)], fromAngle, toAngle, lineColour, lineWidth)
+
     def drawPath(vertices, fillColour="none", lineColour="black", lineWidth=1, lineDashStyle=[]):
         xy = [(vertex.x, vertex.y) for vertex in vertices]
 
